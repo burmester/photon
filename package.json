@@ -1,16 +1,18 @@
 {
-  "name": "webpack-start",
+  "name": "Photon",
   "version": "0.0.0",
-  "description": "Introduction to Webpack",
+  "description": "Simple image editing app",
   "scripts": {
     "postinstall": "npm install -g webpack webpack-dev-server http-server"
   },
-  "author": "Jeremy Lund <jeremylund@workfront.com>",
+  "author": "Johan Burmester <johanbur@kth.se",
   "license": "Apache-2.0",
   "devDependencies": {
-    "webpack-dev-server": "^1.9.0"
+    "css-loader": "^0.25.0",
+    "style-loader": "^0.13.1",
+    "webpack-dev-server": "^1.15.1"
   },
   "dependencies": {
-    "moment": "^2.10.3"
+    "moment": "^2.14.1"
   }
 }
