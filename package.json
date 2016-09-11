@@ -2,17 +2,18 @@
   "name": "Photon",
   "version": "0.0.0",
   "description": "Simple image editing app",
+  "keywords": "webpack, express, react, redux, http2, service worker, progressive web app, mongodb, socket, graphql",
   "scripts": {
     "postinstall": "npm install -g webpack webpack-dev-server http-server"
   },
   "author": "Johan Burmester <johanbur@kth.se",
   "license": "Apache-2.0",
+  "repository" : "git@github.com:burmester/photon.git",
   "devDependencies": {
     "css-loader": "^0.25.0",
     "style-loader": "^0.13.1",
     "webpack-dev-server": "^1.15.1"
   },
   "dependencies": {
-    "moment": "^2.14.1"
   }
 }
