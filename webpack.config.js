@@ -37,13 +37,6 @@ var config = {
 
     loaders: [
 
-    // React hot reload
-    {
-      test: /\.jsx?$/,
-      loaders: ['react-hot', 'jsx?harmony'],
-      include: path.join(__dirname, 'src')
-    },
-
     // I highly recommend using the babel-loader as it gives you
     // ES6/7 syntax and JSX transpiling out of the box
     {
