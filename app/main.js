@@ -1,3 +1,11 @@
-'use strict';
-require('../public/style.css');
-document.write('Hej Hej');
+
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+class World extends React.Component {
+  render() {
+    return <h1>Hello World!</h1>
+  }
+}
+
+ReactDOM.render(<World/>, document.getElementById('helloworld'));

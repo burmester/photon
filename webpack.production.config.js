@@ -3,10 +3,10 @@ var path = require('path');
 var nodeModulesPath = path.resolve(__dirname, 'node_modules');
 var buildPath = path.resolve(__dirname, 'public', 'build');
 var mainPath = path.resolve(__dirname, 'app', 'main.js');
+var appPath = path.resolve(__dirname, "app")
 
-var config = {
 
-  // We change to normal source mapping
+module.exports = {
   devtool: 'source-map',
   entry: mainPath,
   output: {
@@ -15,14 +15,22 @@ var config = {
   },
   module: {
     loaders: [{
-      test: /\.js$/,
-      loader: 'babel',
-      exclude: [nodeModulesPath]
-    },{
+      test: /\.js?$/,
+      loader: 'babel-loader',
+      include: [appPath],
+      query: {
+        presets: ['es2015', 'react'],
+      }
+    }, {
       test: /\.css$/,
       loader: 'style!css'
     }]
-  }
-};
-
-module.exports = config;
+  },
+  plugins: [
+    new Webpack.DefinePlugin({
+      'process.env': {
+        'NODE_ENV': JSON.stringify('production')
+      }
+    })
+  ]
+}
