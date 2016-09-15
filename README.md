@@ -18,3 +18,6 @@ http://www.christianalfoni.com/articles/2015_04_19_The-ultimate-webpack-setup
 
 For HTTP/2
 https://medium.com/@imjacobclark/http-2-with-node-js-85da17322812#.f7montxlf
+
+Other projects:
+https://github.com/gaearon/react-transform-boilerplate

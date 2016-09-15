@@ -8,9 +8,11 @@ var appPath = path.resolve(__dirname, "app")
 module.exports = {
   devtool: 'eval',
   entry: [
-    'babel-polyfill',
-    'webpack/hot/dev-server',
     'webpack-dev-server/client?http://localhost:8080',
+    'babel-polyfill',
+    // Switch between only-dev-server and dev-server. react-hot-loader enable with "only".
+     'webpack/hot/dev-server',
+    // 'webpack/hot/only-dev-server',
     mainPath
   ],
   output: {
@@ -21,12 +23,8 @@ module.exports = {
   module: {
     loaders: [{
       test: /\.js?$/,
-      loader: 'babel-loader',
-      include: [appPath],
-      query: {
-        plugins: ['transform-runtime'],
-        presets: ['es2015', 'react'],
-      }
+      loaders: ['babel-loader'],
+      include: [appPath]
     }, {
       test: /\.css$/,
       loader: 'style!css'
