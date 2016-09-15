@@ -3,19 +3,19 @@ var path = require('path');
 var httpProxy = require('http-proxy');
 var fs = require('fs');
 var spdy = require('spdy');
-
-
+var compression = require('compression');
 
 var app = express();
 
 var isProduction = process.env.NODE_ENV === 'production';
-var port = isProduction ? process.env.PORT || 3000 : 3000;
+var port = isProduction ? process.env.PORT : 3000;
 var publicPath = path.resolve(__dirname, 'public');
 
-app.use(express.static(publicPath));
+
 
 if (!isProduction) {
   var proxy = httpProxy.createProxyServer();
+  app.use(express.static(publicPath));
 
   // We require the bundler inside the if block because
   // it is only needed in a development environment. Later
@@ -25,11 +25,12 @@ if (!isProduction) {
 
   // Any requests to localhost:3000/build is proxied
   // to webpack-dev-server
-  app.all('/build/*', function (req, res) {
+  app.all('/build/*', function(req, res) {
     proxy.web(req, res, {
-        target: 'http://localhost:8080'
+      target: 'http://localhost:8080'
     });
   });
+
 
   // It is important to catch any errors from the proxy or the
   // server will crash. An example of this is connecting to the
@@ -37,22 +38,28 @@ if (!isProduction) {
   proxy.on('error', function(e) {
     console.log('Could not connect to proxy, please try again...');
   });
-  app.listen(port, function () {
-    console.log('Development server running on port ' + port);
+
+  app.listen(port, function() {
+    console.log('Server running on port ' + port);
   });
-}else {
+
+}
+else {
   const serverKey = path.resolve(__dirname, 'tls/server.key');
   const serverCrt = path.resolve(__dirname, 'tls/server.crt');
 
+  app.use(compression());
+  app.use(express.static(publicPath));
+
   spdy.createServer({
-          key: fs.readFileSync(serverKey),
-          cert: fs.readFileSync(serverCrt)
-      }, app)
-      .listen(port, (err) => {
-          if (err) {
-              throw new Error(err);
-          }
-          console.log('Production server running on port ' + port);
-      });
+      key: fs.readFileSync(serverKey),
+      cert: fs.readFileSync(serverCrt)
+    }, app)
+    .listen(port, (err) => {
+      if (err) {
+        throw new Error(err);
+      }
+      console.log('Production server running on port ' + port);
+    });
 
 }

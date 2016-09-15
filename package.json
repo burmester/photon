@@ -30,6 +30,7 @@
     "webpack-dev-server": "^1.15.1"
   },
   "dependencies": {
+    "compression": "^1.6.2",
     "express": "^4.14.0",
     "spdy": "^3.3.5",
     "underscore": "^1.8.3"
