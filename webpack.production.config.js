@@ -5,7 +5,6 @@ var buildPath = path.resolve(__dirname, 'public', 'build');
 var mainPath = path.resolve(__dirname, 'app', 'main.js');
 var appPath = path.resolve(__dirname, "app")
 
-
 module.exports = {
   devtool: 'source-map',
   entry: mainPath,
@@ -14,17 +13,22 @@ module.exports = {
     filename: 'bundle.js'
   },
   module: {
-    loaders: [{
-      test: /\.js?$/,
-      loader: 'babel-loader',
-      include: [appPath],
-      query: {
-        presets: ['es2015', 'react'],
+    loaders: [
+      {
+        test: /\.js?$/,
+        loader: 'babel-loader',
+        include: [appPath],
+        query: {
+          presets: ['es2015', 'react']
+        }
+      }, {
+        test: /\.css$/,
+        loader: ['style', 'css?sourceMap']
+      }, {
+        test: /\.scss$/,
+        loaders: ["style", "css?sourceMap", "sass?sourceMap"]
       }
-    }, {
-      test: /\.css$/,
-      loader: 'style!css'
-    }]
+    ]
   },
   plugins: [
     new Webpack.DefinePlugin({
@@ -32,7 +36,7 @@ module.exports = {
         'NODE_ENV': JSON.stringify('production')
       }
     }),
-    new webpack.optimize.UglifyJsPlugin({
+    new Webpack.optimize.UglifyJsPlugin({
       compressor: {
         warnings: false
       }

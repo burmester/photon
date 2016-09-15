@@ -43,8 +43,7 @@ if (!isProduction) {
     console.log('Server running on port ' + port);
   });
 
-}
-else {
+} else {
   const serverKey = path.resolve(__dirname, 'tls/server.key');
   const serverCrt = path.resolve(__dirname, 'tls/server.crt');
 

@@ -1,0 +1,50 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: rgb(255, 255, 255);
+}
+
+h1{
+  margin-bottom: 1vh;
+  margin-top: 0.5vh;
+}
+
+header,
+main,
+nav {
+  padding-left: 10px;
+  padding-right: 10px;
+  width: 100vw;
+}
+
+header {
+  background: rgb(78, 56, 207);
+  font-size: 5vh;
+  line-height: 10vh;
+  height: 10vh;
+  position: fixed;
+  top: 0;
+  z-index: 3;
+}
+
+main {
+  min-height: 78vh;
+  position: relative;
+  top: 10vh;
+  padding-top: 1vh;
+  padding-bottom: 1vh;
+  margin-bottom:  10vh;
+}
+
+nav {
+  background: rgb(101, 101, 101);
+  font-size: 5vh;
+  position: fixed;
+  bottom: 0;
+  line-height: 10vh;
+  height: 10vh;
+  z-index: 3;
+}
