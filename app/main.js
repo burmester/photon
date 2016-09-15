@@ -1,3 +1,3 @@
 'use strict';
 require('../public/style.css');
-document.write('Mumma');
+document.write('Hej Hej');
