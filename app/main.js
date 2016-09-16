@@ -1,12 +1,11 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import Header from './components/layout/Header';
 import Content from './components/layout/Content';
 import Naviagtion from './components/layout/Naviagtion';
 
 import '../public/sass/main.scss';
 
-class Photon extends React.Component {
+export default class Photon extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -27,6 +26,3 @@ class Photon extends React.Component {
     )
   }
 }
-
-ReactDOM.render(
-  <Photon/>, document.getElementById('app'));
