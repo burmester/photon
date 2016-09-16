@@ -14,6 +14,10 @@
     "socket",
     "graphql"
   ],
+  "repository" :
+  { "type" : "git",
+     "url" : "https://github.com/burmester/photon.git"
+  },
   "scripts": {
     "postinstall": "npm install -g webpack webpack-dev-server http-server",
     "start": "node server"
