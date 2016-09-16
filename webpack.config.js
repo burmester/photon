@@ -6,7 +6,7 @@ var mainPath = path.resolve(__dirname, 'app', 'App.js');
 var appPath = path.resolve(__dirname, 'app')
 
 module.exports = {
-  devtool: 'cheap-module-eval-source-map',
+  devtool: 'module-inline-source-map',
   entry: [
     'webpack-dev-server/client?http://localhost:8080',
     // Switch between only-dev-server and dev-server. react-hot-loader enable with 'only'.
