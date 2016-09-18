@@ -1,41 +1,27 @@
-var Webpack = require('webpack');
-var WebpackDevServer = require('webpack-dev-server');
-var webpackConfig = require('./../webpack.config.js');
-var path = require('path');
-var fs = require('fs');
-var mainPath = path.resolve(__dirname, '..', 'app', 'main.js');
+import Webpack from 'webpack';
+import WebpackDevServer from 'webpack-dev-server';
+import path  from 'path';
+import webpackConfig from './../webpack.config.js';
 
-module.exports = function() {
+const mainPath = path.resolve(__dirname, '..', 'app', 'main.js');
 
-  // First we fire up Webpack an pass in the configuration we
-  // created
-  var bundleStart = null;
-  var compiler = Webpack(webpackConfig);
+export default function() {
 
-  // We give notice in the terminal when it starts bundling and
-  // set the time it started
-  compiler.plugin('compile', function() {
+  let bundleStart = null;
+  const compiler = Webpack(webpackConfig);
+
+  compiler.plugin('compile', () => {
     console.log('Bundling...');
     bundleStart = Date.now();
   });
 
-  // We also give notice when it is done compiling, including the
-  // time it took. Nice to have
-  compiler.plugin('done', function() {
+  compiler.plugin('done', () => {
     console.log('Bundled in ' + (Date.now() - bundleStart) + 'ms!');
   });
 
-  var bundler = new WebpackDevServer(compiler, {
-
-    // We need to tell Webpack to serve our bundled application
-    // from the build path. When proxying:
-    // http://localhost:3000/build -> http://localhost:8080/build
+  const bundler = new WebpackDevServer(compiler, {
     publicPath: '/build/',
-
-    // Configure hot replacement
     hot: true,
-
-    // The rest is terminal configurations
     quiet: false,
     noInfo: true,
     stats: {
@@ -43,10 +29,7 @@ module.exports = function() {
     }
   });
 
-  // We fire up the development server and give notice in the terminal
-  // that we are starting the initial bundle
-  bundler.listen(8080, 'localhost', function() {
+  bundler.listen(8080, 'localhost', () => {
     console.log('Bundling project, please wait...');
   });
-
-};
+}

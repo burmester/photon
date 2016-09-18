@@ -1,26 +1,24 @@
-var React = require('react'),
-  DOM = React.DOM,
-  body = DOM.body,
-  div = DOM.div,
-  script = DOM.script,
-  ReactDOMServer = require('react-dom/server'),
-  App = React.createFactory(require("./Main"));
+import React from 'react';
+import {renderToString, renderToStaticMarkup} from 'react-dom/server';
+import main from '../app/Main';
+
+const App = React.createFactory(main);
 
 module.exports = function() {
-  var props = {
+  const props = {
     'hello': 'world'
   };
 
-  var html = ReactDOMServer.renderToStaticMarkup(body(null, div({
+  let html = renderToStaticMarkup(React.DOM.body(null, React.DOM.div({
     id: 'app',
     dangerouslySetInnerHTML: {
-      __html: ReactDOMServer.renderToString(App())
+      __html: renderToString(App())
     }
-  }), script({
+  }), React.DOM.script({
     dangerouslySetInnerHTML: {
       __html: 'var DEAFULT_VALUES = ' + safeStringify(props) + ';'
     }
-  }), script({src: './build/bundle.js'})))
+  }), React.DOM.script({src: './build/bundle.js'})))
 
   return html;
 }

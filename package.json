@@ -17,17 +17,17 @@
   "repository": "git@github.com:burmester/photon.git",
   "scripts": {
     "postinstall": "npm install -g webpack webpack-dev-server http-server",
-    "start": "node server"
+    "start": "babel-node --presets es2015 server.js"
   },
   "author": "Johan Burmester <johanbur@kth.se",
   "license": "Apache-2.0",
   "devDependencies": {
+    "babel-cli": "^6.14.0",
     "babel-core": "^6.14.0",
     "babel-loader": "^6.2.5",
     "babel-plugin-transform-runtime": "^6.15.0",
     "babel-preset-es2015": "^6.14.0",
     "babel-preset-react": "^6.11.1",
-    "babel-register": "^6.14.0",
     "css-loader": "^0.25.0",
     "node-sass": "^3.10.0",
     "react": "^15.3.1",

@@ -1,9 +1,10 @@
-var Webpack = require('webpack');
-var path = require('path');
-var nodeModulesPath = path.resolve(__dirname, 'node_modules');
-var buildPath = path.resolve(__dirname, 'public', 'build');
-var mainPath = path.resolve(__dirname, 'app', 'App.js');
-var appPath = path.resolve(__dirname, "app")
+import Webpack from 'webpack';
+import path from 'path';
+
+const nodeModulesPath = path.resolve(__dirname, 'node_modules');
+const buildPath = path.resolve(__dirname, 'public', 'build');
+const mainPath = path.resolve(__dirname, 'app', 'App.js');
+const appPath = path.resolve(__dirname, "app")
 
 module.exports = {
   devtool: 'source-map',

@@ -1,26 +1,27 @@
-var express = require('express');
-var path = require('path');
-var httpProxy = require('http-proxy');
-var fs = require('fs');
-var spdy = require('spdy');
-var compression = require('compression');
+import express from 'express';
+import path from 'path';
+import httpProxy from 'http-proxy';
+import fs from 'fs';
+import spdy from 'spdy';
+import compression from 'compression';
 
-var app = express();
+import index from './server/index';
+import bundle from './server/bundle';
 
-var isProduction = process.env.NODE_ENV === 'production';
-var port = isProduction
+const isProduction = process.env.NODE_ENV === 'production';
+const port = isProduction
   ? process.env.PORT
   : 3000;
 
-var publicPath = path.resolve(__dirname, 'public');
+const publicPath = path.resolve(__dirname, 'public');
+const app = express();
 
 if (!isProduction) {
-  var proxy = httpProxy.createProxyServer();
+  let proxy = httpProxy.createProxyServer();
 
-  app.use(function(req, res, next) {
+  app.use((req, res, next) => {
     if (req.url == '/') {
       if (true) {
-        var index = require('./server/index');
         res.send(index());
       } else {
         res.sendFile(publicPath + '/index.html');
@@ -31,28 +32,18 @@ if (!isProduction) {
   });
 
   app.use(express.static(publicPath));
-
-  // We require the bundler inside the if block because
-  // it is only needed in a development environment. Later
-  // you will see why this is a good idea
-  var bundle = require('./server/bundle');
   bundle();
 
-  // Any requests to localhost:3000/build is proxied
-  // to webpack-dev-server
-  app.all('/build/*', function(req, res) {
+  app.all('/build/*', (req, res) => {
     proxy.web(req, res, {target: 'http://localhost:8080'});
   });
 
-  // It is important to catch any errors from the proxy or the
-  // server will crash. An example of this is connecting to the
-  // server when webpack is bundling
-  proxy.on('error', function(e) {
+  proxy.on('error', (e) => {
     console.log('Could not connect to proxy, please try again...');
   });
 
-  app.listen(port, function() {
-    console.log('Server running on port ' + port);
+  app.listen(port, () => {
+    console.log('Development server running on port ' + port);
   });
 
 } else {
@@ -61,10 +52,9 @@ if (!isProduction) {
 
   app.use(compression());
 
-  app.use(function(req, res, next) {
+  app.use((req, res, next) => {
     if (req.url == '/') {
       if (true) {
-        var index = require('./server/index');
         res.send(index());
       } else {
         res.sendFile(publicPath + '/index.html');
