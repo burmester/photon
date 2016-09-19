@@ -44,6 +44,7 @@
     "babel-runtime": "^6.11.6",
     "compression": "^1.6.2",
     "express": "^4.14.0",
+    "moment": "^2.15.0",
     "spdy": "^3.3.5",
     "underscore": "^1.8.3"
   }

@@ -4,6 +4,7 @@ import httpProxy from 'http-proxy';
 import fs from 'fs';
 import spdy from 'spdy';
 import compression from 'compression';
+import moment from 'moment';
 
 import index from './server/index';
 import bundle from './server/bundle';
@@ -18,6 +19,11 @@ const app = express();
 
 if (!isProduction) {
   let proxy = httpProxy.createProxyServer();
+
+  app.use((req, res, next) => {
+    console.log(moment().format('hh:mm:ss'), req.method , req.url);
+    next();
+});
 
   app.use((req, res, next) => {
     if (req.url == '/') {
