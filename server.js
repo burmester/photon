@@ -5,9 +5,11 @@ import fs from 'fs';
 import spdy from 'spdy';
 import compression from 'compression';
 import moment from 'moment';
+import bodyParser from 'body-parser';
 
 import index from './server/index';
 import bundle from './server/bundle';
+import db from './server/config/database';
 
 const isProduction = process.env.NODE_ENV === 'production';
 const port = isProduction
@@ -17,13 +19,15 @@ const port = isProduction
 const publicPath = path.resolve(__dirname, 'public');
 const app = express();
 
+app.use(bodyParser.json());
+
 if (!isProduction) {
   let proxy = httpProxy.createProxyServer();
 
   app.use((req, res, next) => {
-    console.log(moment().format('hh:mm:ss'), req.method , req.url);
+    console.log(moment().format('hh:mm:ss'), req.method, req.url);
     next();
-});
+  });
 
   app.use((req, res, next) => {
     if (req.url == '/') {
@@ -35,6 +39,18 @@ if (!isProduction) {
     } else {
       next();
     }
+  });
+
+  app.post('/api', (req, res) => {
+    db.create(parseInt(req.body.weight)).then((weight) => {
+      res.status(201).json(weight);
+    })
+  });
+
+  app.get('/api', (req, res) => {
+    db.find().then((weights) => {
+      res.status(200).json(weights);
+    })
   });
 
   app.use(express.static(publicPath));

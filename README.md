@@ -6,6 +6,10 @@ Webpack-dev-server for development.
 
 **How to run**
 
+Now uses Mongodb, start the datebase before:
+
+`mongod`
+
 To install dev:
 
 `npm install -g webpack webpack-dev-server http-server`
@@ -14,7 +18,7 @@ To run dev:
 
 `npm start`
 
-To intall prod:
+To install prod:
 (since http2 is using tls you need to creat certs)
 
 `
