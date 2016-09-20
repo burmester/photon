@@ -46,9 +46,11 @@
     "body-parser": "^1.15.2",
     "compression": "^1.6.2",
     "express": "^4.14.0",
+    "express-graphql": "^0.5.4",
     "graphql": "^0.7.0",
     "moment": "^2.15.0",
     "mongoose": "^4.6.0",
+    "q": "^1.4.1",
     "spdy": "^3.3.5",
     "underscore": "^1.8.3"
   }

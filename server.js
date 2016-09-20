@@ -7,9 +7,14 @@ import compression from 'compression';
 import moment from 'moment';
 import bodyParser from 'body-parser';
 
+import {graphql} from 'graphql';
+import graphqlHTTP from 'express-graphql';
+
 import index from './server/index';
 import bundle from './server/bundle';
-import db from './server/config/database';
+
+import db from './server/database/mongoose';
+import schema from './server/database/schema';
 
 const isProduction = process.env.NODE_ENV === 'production';
 const port = isProduction
@@ -19,8 +24,6 @@ const port = isProduction
 const publicPath = path.resolve(__dirname, 'public');
 const app = express();
 
-app.use(bodyParser.json());
-
 if (!isProduction) {
   let proxy = httpProxy.createProxyServer();
 
@@ -29,31 +32,37 @@ if (!isProduction) {
     next();
   });
 
-  app.use((req, res, next) => {
-    if (req.url == '/') {
-      if (true) {
-        res.send(index());
-      } else {
-        res.sendFile(publicPath + '/index.html');
-      }
+  const useSSR = true;
+  app.get('/', (req, res) => {
+    if (useSSR) {
+      res.send(index());
     } else {
-      next();
+      res.sendFile(publicPath + '/index.html');
     }
   });
 
-  app.post('/api', (req, res) => {
+  app.use(bodyParser.json());
+
+  app.post('/rest', (req, res) => {
     db.create(parseInt(req.body.weight)).then((weight) => {
       res.status(201).json(weight);
     })
   });
 
-  app.get('/api', (req, res) => {
+  app.get('/rest', (req, res) => {
     db.find().then((weights) => {
       res.status(200).json(weights);
     })
   });
 
+  app.post('/graphql', (req, res) => {
+    graphql(schema, req.body).then(result => res.send(result));
+  });
+
+  app.use('/graphiql', graphqlHTTP({schema: schema, rootValue: global, graphiql: true}));
+
   app.use(express.static(publicPath));
+
   bundle();
 
   app.all('/build/*', (req, res) => {
@@ -74,16 +83,8 @@ if (!isProduction) {
 
   app.use(compression());
 
-  app.use((req, res, next) => {
-    if (req.url == '/') {
-      if (true) {
-        res.send(index());
-      } else {
-        res.sendFile(publicPath + '/index.html');
-      }
-    } else {
-      next();
-    }
+  app.get('/', (req, res) => {
+    res.send(index());
   });
 
   app.use(express.static(publicPath));
