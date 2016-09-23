@@ -7,13 +7,11 @@ import compression from 'compression';
 import moment from 'moment';
 import bodyParser from 'body-parser';
 
-import {graphql} from 'graphql';
 import graphqlHTTP from 'express-graphql';
 import schema from './server/database/schema';
 
 import index from './server/index';
 import bundle from './server/bundle';
-
 
 const isProduction = process.env.NODE_ENV === 'production';
 const port = isProduction
@@ -31,22 +29,13 @@ if (!isProduction) {
     next();
   });
 
-  const useSSR = true;
   app.get('/', (req, res) => {
-    if (useSSR) {
-      res.send(index());
-    } else {
-      res.sendFile(publicPath + '/index.html');
-    }
+      index(schema).then((html) => {
+        res.send(html);
+      });
   });
 
-  app.use(bodyParser.json());
-
-  app.post('/graphql', (req, res) => {
-    graphql(schema, req.body).then(result => res.send(result));
-  });
-
-  app.use('/graphiql', graphqlHTTP({schema: schema, rootValue: global, graphiql: true}));
+  app.use('/graphiql', graphqlHTTP({schema: schema, rootValue: global, graphiql: true, pretty: true}));
 
   app.use(express.static(publicPath));
 
@@ -71,8 +60,12 @@ if (!isProduction) {
   app.use(compression());
 
   app.get('/', (req, res) => {
-    res.send(index());
+    index(schema).then((html) => {
+      res.send(html);
+    });
   });
+
+  app.use('/graphiql', graphqlHTTP({schema: schema, rootValue: global}));
 
   app.use(express.static(publicPath));
 

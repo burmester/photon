@@ -20,7 +20,7 @@ export default class Photon extends React.Component {
     return (
       <div>
         <Header/>
-        <Content/>
+        <Content users={this.props.data.users}/>
         <Naviagtion/>
       </div>
     )

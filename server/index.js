@@ -1,30 +1,35 @@
 import React from 'react';
 import {renderToString} from 'react-dom/server';
 import main from '../app/Main';
+import {graphql} from 'graphql';
+import Q from 'q';
 
 const App = React.createFactory(main);
+const firstLoadQuery = "{users{name }}"
 
-module.exports = function() {
-  const props = {
-    'hello': 'world'
-  };
+export default function(schema) {
 
-  const body = renderToString(App());
-  const html = `<!doctype html>
-<html>
-  <head>
-    <script async src="./build/bundle.js"></script>
-    <link rel="stylesheet" href="./sass/styles.css">
-  </head>
-  <body>
-    <div id="app">${body}</div>
-    <script>
-      var DEAFULT_VALUES = ${safeStringify(props)};
-    </script>
-  </body>
-</html>`;
+  let deferred = Q.defer();
 
-  return html;
+  graphql(schema, firstLoadQuery).then(props => {
+    const body = renderToString(App(props));
+    const html = `<!doctype html>
+  <html>
+    <head>
+      <script async src="./build/bundle.js"></script>
+      <link rel="stylesheet" href="./sass/styles.css">
+    </head>
+    <body>
+      <div id="app">${body}</div>
+      <script>
+        var default_props = ${safeStringify(props)};
+      </script>
+    </body>
+  </html>`;
+    deferred.resolve(html);
+  })
+
+  return deferred.promise
 }
 
 function safeStringify(obj) {

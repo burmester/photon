@@ -1,9 +1,18 @@
 import React from 'react';
 
 export default class Content extends React.Component {
+  constructor(props) {
+    super(props);
+  }
   render() {
+
+    let html = this.props.users.map(user => {
+      return <div key={user.name}>{user.name}</div>
+    });
+
     return (
       <main>
+        {html}
         <article>
           <h1>heading1</h1>
           <p>
