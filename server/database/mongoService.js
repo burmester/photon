@@ -1,20 +1,15 @@
-let MongoClient = require('mongodb').MongoClient;
-let Q = require('q');
+import {MongoClient} from 'mongodb';
+import Q from 'q';
 
-// Connection URL
-const MONGO_URL = 'mongodb://localhost:27017/pokedex';
+const MONGODB_URL = 'mongodb://localhost:27017/pokedex';
 
-export const mongo = cb => {
-
+export const db = cb => {
   let deferred = Q.defer();
-
-  // Use connect method to connect to the Server
-  MongoClient.connect(MONGO_URL, (err, db) => {
+  MongoClient.connect(MONGODB_URL, (err, db) => {
     if (err) {
       return deferred.reject(err);
     }
     return deferred.resolve(db);
   });
-
   return deferred.promise;
 };

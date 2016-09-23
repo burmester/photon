@@ -9,12 +9,11 @@ import bodyParser from 'body-parser';
 
 import {graphql} from 'graphql';
 import graphqlHTTP from 'express-graphql';
+import schema from './server/database/schema';
 
 import index from './server/index';
 import bundle from './server/bundle';
 
-import db from './server/database/mongoose';
-import schema from './server/database/schema';
 
 const isProduction = process.env.NODE_ENV === 'production';
 const port = isProduction
@@ -42,18 +41,6 @@ if (!isProduction) {
   });
 
   app.use(bodyParser.json());
-
-  app.post('/rest', (req, res) => {
-    db.create(parseInt(req.body.weight)).then((weight) => {
-      res.status(201).json(weight);
-    })
-  });
-
-  app.get('/rest', (req, res) => {
-    db.find().then((weights) => {
-      res.status(200).json(weights);
-    })
-  });
 
   app.post('/graphql', (req, res) => {
     graphql(schema, req.body).then(result => res.send(result));

@@ -8,13 +8,13 @@ import {
 
 import { Pokemon } from './Pokemon';
 import { PokemonType, UserType } from './schemaTypes';
-import { mongo } from './mongoService';
+import { db } from './mongoService';
 
 import Q from 'q';
 
 let schema = new GraphQLSchema({
   query: new GraphQLObjectType({
-    name: 'RootQueryType',
+    name: 'Query',
     fields: {
       pokemon: {
         type: new GraphQLList(PokemonType),
@@ -30,7 +30,7 @@ let schema = new GraphQLSchema({
         },
         resolve: (root, {name}) => {
 
-          return mongo()
+          return db()
             .then(db => {
               let deferred = Q.defer();
 
@@ -73,7 +73,7 @@ let schema = new GraphQLSchema({
             created: new Date().valueOf()
           };
 
-          return mongo()
+          return db()
             .then(db => {
               let deferred = Q.defer();
 
@@ -123,7 +123,7 @@ let schema = new GraphQLSchema({
           }
         },
         resolve: (obj, {name, pokemon}) => {
-          return mongo()
+          return db()
             .then(db => {
               let deferred = Q.defer();
 

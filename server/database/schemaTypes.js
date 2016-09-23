@@ -37,7 +37,7 @@ export const UserType = new GraphQLObjectType({
       description: 'The name of the User.',
     },
     caught: {
-      type: new GraphQLList(GraphQLString),
+      type: new GraphQLList(PokemonType),
       description: 'The Pokemon that have been caught by the User.',
     },
     created: {
