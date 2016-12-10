@@ -1,4 +1,4 @@
-import {GraphQLObjectType, GraphQLInt, GraphQLList, GraphQLString} from 'graphql';
+import {GraphQLObjectType, GraphQLInt, GraphQLList, GraphQLString, GraphQLFloat} from 'graphql';
 
 export const PokemonType = new GraphQLObjectType({
   name: 'Pokemon',
@@ -36,7 +36,7 @@ export const UserType = new GraphQLObjectType({
       description: 'The Pokemon that have been caught by the User.'
     },
     created: {
-      type: GraphQLInt,
+      type: GraphQLFloat,
       description: 'The creation timestamp of the User.'
     },
     friends: {

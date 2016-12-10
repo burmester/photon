@@ -1,4 +1,4 @@
-import Webpack from 'webpack';
+import webpack from 'webpack';
 import path from 'path';
 
 const nodeModulesPath = path.resolve(__dirname, 'node_modules');
@@ -34,5 +34,11 @@ module.exports = {
       }
     ]
   },
-  plugins: [new Webpack.HotModuleReplacementPlugin()]
+  plugins: [
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.ProvidePlugin({
+      Promise: 'imports-loader?this=>global!exports-loader?global.Promise!es6-promise',
+      fetch: 'imports-loader?this=>global!exports-loader?global.fetch!whatwg-fetch'
+    })
+  ]
 };
