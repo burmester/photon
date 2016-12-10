@@ -24,9 +24,9 @@ let schema = new GraphQLSchema({
                 }
                 db.close();
                 resolve(docs);
-              })
-            })
-          })
+              });
+            });
+          });
         }
       },
       user: {
@@ -52,7 +52,6 @@ let schema = new GraphQLSchema({
               });
             });
           });
-
         }
       }
     }
@@ -95,9 +94,7 @@ let schema = new GraphQLSchema({
                 // insert the user if they do not exist
                 collection.insert(toCreate, (err, result) => {
                   db.close();
-
                   if (err) return reject(err);
-
                   resolve(toCreate);
                 });
               });
@@ -132,13 +129,10 @@ let schema = new GraphQLSchema({
                   return reject(err || 'The user was not found');
                 }
 
-                if (doc[0].name == user) {
-                  let u = docs[0],
-                    f = docs[1];
-                } else {
-                  let u = docs[1],
-                    f = docs[0];
-                }
+                let [u, f] = () => {
+                  if (docs[0].name === user) return [docs[0], docs[1]];
+                  return [docs[1], docs[0]];
+                };
 
                 if (!u) {
                   db.close();
@@ -195,12 +189,8 @@ let schema = new GraphQLSchema({
                 }
 
                 let caught = docs[0].caught;
-                const p = Pokemon.find((p) => {
-                  return p.name === pokemon
-                });
-                if (p)
-                  caught.push(p);
-
+                const p = Pokemon.find(p => p.name === pokemon);
+                if (p) caught.push(p);
                 // update the user with updated caught array
                 collection.update({
                   name
@@ -244,9 +234,7 @@ let schema = new GraphQLSchema({
                   return reject(err || 'The user was not found');
                 }
                 let caught = docs[0].caught;
-                caught = caught.filter((p) => {
-                  p.name != pokemon
-                });
+                caught = caught.filter(p => p.name !== pokemon);
                 // update the user with updated caught array
                 collection.update({
                   name
@@ -267,6 +255,7 @@ let schema = new GraphQLSchema({
         }
       }
     }
-  })});
+  })
+});
 
 export default schema;

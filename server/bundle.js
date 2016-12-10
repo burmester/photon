@@ -1,12 +1,8 @@
 import Webpack from 'webpack';
 import WebpackDevServer from 'webpack-dev-server';
-import path  from 'path';
 import webpackConfig from './../webpack.config.js';
 
-const mainPath = path.resolve(__dirname, '..', 'app', 'main.js');
-
-export default function() {
-
+export default function () {
   let bundleStart = null;
   const compiler = Webpack(webpackConfig);
 

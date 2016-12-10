@@ -4,10 +4,9 @@ import main from '../app/Main';
 import {graphql} from 'graphql';
 
 const App = React.createFactory(main);
-const firstLoadQuery = "{users{name }}"
+const firstLoadQuery = '{users{name }}';
 
-export default function(schema) {
-
+export default function (schema) {
   return new Promise((resolve, reject) => {
     graphql(schema, firstLoadQuery).then(props => {
       const body = renderToString(App(props));
@@ -25,10 +24,10 @@ export default function(schema) {
     </body>
   </html>`;
       resolve(html);
-    })
+    });
   });
 }
 
-function safeStringify(obj) {
-  return JSON.stringify(obj).replace(/<\/script/g, '<\\/script').replace(/<!--/g, '<\\!--')
+function safeStringify (obj) {
+  return JSON.stringify(obj).replace(/<\/script/g, '<\\/script').replace(/<!--/g, '<\\!--');
 }

@@ -1,15 +1,11 @@
 import React from 'react';
 
 export default class Content extends React.Component {
-  constructor(props) {
+  constructor (props) {
     super(props);
   }
-  render() {
-
-    let html = this.props.users.map(user => {
-      return <div key={user.name}>{user.name}</div>
-    });
-
+  render () {
+    let html = this.props.users.map(user => (<div key={user.name}>{user.name}</div>));
     return (
       <main>
         {html}
@@ -59,3 +55,7 @@ export default class Content extends React.Component {
     )
   }
 }
+
+Content.propTypes = {
+  users: React.PropTypes.array
+};

@@ -5,7 +5,6 @@ import fs from 'fs';
 import spdy from 'spdy';
 import compression from 'compression';
 import moment from 'moment';
-import bodyParser from 'body-parser';
 
 import graphqlHTTP from 'express-graphql';
 import schema from './server/database/schema';
@@ -30,9 +29,9 @@ if (!isProduction) {
   });
 
   app.get('/', (req, res) => {
-      index(schema).then((html) => {
-        res.send(html);
-      });
+    index(schema).then((html) => {
+      res.send(html);
+    });
   });
 
   app.use('/graphiql', graphqlHTTP({schema: schema, rootValue: global, graphiql: true, pretty: true}));
@@ -52,7 +51,6 @@ if (!isProduction) {
   app.listen(port, () => {
     console.log('Development server running on port ' + port);
   });
-
 } else {
   const serverKey = path.resolve(__dirname, './server.key');
   const serverCrt = path.resolve(__dirname, './server.crt');
@@ -78,5 +76,4 @@ if (!isProduction) {
     }
     console.log('Production server running on port ' + port);
   });
-
 }
