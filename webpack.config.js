@@ -1,10 +1,9 @@
 import webpack from 'webpack';
 import path from 'path';
 
-const nodeModulesPath = path.resolve(__dirname, 'node_modules');
 const buildPath = path.resolve(__dirname, 'public', 'build');
 const mainPath = path.resolve(__dirname, 'app', 'App.js');
-const appPath = path.resolve(__dirname, 'app')
+const appPath = path.resolve(__dirname, 'app');
 
 module.exports = {
   devtool: 'module-inline-source-map',

@@ -1,6 +1,9 @@
 import {MongoClient} from 'mongodb';
 
-const MONGODB_URL = 'mongodb://localhost:27017/pokedex';
+const isProduction = process.env.NODE_ENV === 'production';
+const MONGODB_URL = isProduction
+  ? process.env.MONGODB_URI
+  : 'mongodb://localhost:27017/pokedex';
 
 export const db = cb => {
   return new Promise((resolve, reject) => {

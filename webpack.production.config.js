@@ -1,10 +1,9 @@
 import Webpack from 'webpack';
 import path from 'path';
 
-const nodeModulesPath = path.resolve(__dirname, 'node_modules');
 const buildPath = path.resolve(__dirname, 'public', 'build');
 const mainPath = path.resolve(__dirname, 'app', 'App.js');
-const appPath = path.resolve(__dirname, "app")
+const appPath = path.resolve(__dirname, 'app');
 
 module.exports = {
   devtool: 'source-map',
@@ -27,7 +26,7 @@ module.exports = {
         loader: ['style', 'css?sourceMap']
       }, {
         test: /\.scss$/,
-        loaders: ["style", "css?sourceMap", "sass?sourceMap"]
+        loaders: ['style', 'css?sourceMap', 'sass?sourceMap']
       }
     ]
   },
@@ -43,4 +42,4 @@ module.exports = {
       }
     })
   ]
-}
+};
