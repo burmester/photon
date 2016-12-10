@@ -7,6 +7,7 @@ export const db = cb => {
   let deferred = Q.defer();
   MongoClient.connect(MONGODB_URL, (err, db) => {
     if (err) {
+      console.log('Could not connect to database, have you started it?', err);
       return deferred.reject(err);
     }
     return deferred.resolve(db);
