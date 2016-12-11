@@ -2,10 +2,10 @@ import webpack from 'webpack';
 import path from 'path';
 
 const buildPath = path.resolve(__dirname, 'public', 'build');
-const mainPath = path.resolve(__dirname, 'app', 'App.js');
-const appPath = path.resolve(__dirname, 'app');
+const mainPath = path.resolve(__dirname, 'src', 'app', 'App.js');
+const appPath = path.resolve(__dirname, 'src', 'app');
 
-module.exports = {
+export default {
   devtool: 'module-inline-source-map',
   entry: [
     'webpack-dev-server/client?http://localhost:8080',
@@ -15,8 +15,7 @@ module.exports = {
   ],
   output: {
     path: buildPath,
-    filename: 'bundle.js',
-    publicPath: '/build/'
+    filename: 'bundle.js'
   },
   module: {
     loaders: [

@@ -1,24 +1,32 @@
 import webpack from 'webpack';
 import path from 'path';
+import webpackNodeExternals from 'webpack-node-externals';
 
-const buildPath = path.resolve(__dirname, 'public', 'build');
-const mainPath = path.resolve(__dirname, 'app', 'App.js');
-const appPath = path.resolve(__dirname, 'app');
+const app = path.resolve(__dirname, 'src', 'app', 'app');
+const server = path.resolve(__dirname, 'src', 'server', 'prod');
 
-const webpackConfig = {
+const appPath = path.resolve(__dirname, 'src', 'app');
+const serverPath = path.resolve(__dirname, 'src', 'server');
+
+export default {
+  target: 'node',
   devtool: 'source-map',
-  entry: mainPath,
+  entry: {
+    'public/build/bundle.js': app,
+    'private/build/server.js': server
+  },
   output: {
-    path: buildPath,
-    filename: 'bundle.js'
+    path: './',
+    filename: '[name]'
   },
   module: {
     loaders: [
       {
         test: /\.js?$/,
         loader: 'babel-loader',
-        include: [appPath]
-      }, {
+        include: [appPath, serverPath]
+      },
+      {
         test: /\.css$/,
         loader: ['style', 'css?sourceMap']
       }, {
@@ -27,6 +35,7 @@ const webpackConfig = {
       }
     ]
   },
+  externals: [webpackNodeExternals()],
   plugins: [
     new webpack.DefinePlugin({
       'process.env': {
@@ -44,5 +53,3 @@ const webpackConfig = {
     })
   ]
 };
-
-export default webpackConfig;

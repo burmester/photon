@@ -17,10 +17,12 @@
   "repository": "git@github.com:burmester/photon.git",
   "scripts": {
     "install": "npm install -g webpack webpack-dev-server http-server",
-    "build": "NODE_ENV=production ./node_modules/.bin/babel-node --presets es2015 compile.js",
-    "prod": "NODE_ENV=production PORT=3000 ./node_modules/.bin/babel-node --presets es2015 server.js",
-    "prod2": "NODE_ENV=production PORT=3000 USEHTTP2=true ./node_modules/.bin/babel-node --presets es2015 server.js",
-    "start": "./node_modules/.bin/babel-node --presets es2015 server.js"
+    "build": "babel-node --presets es2015 ./build.js",
+    "dev": "babel-node --presets es2015 ./src/server/dev.js",
+    "prod": "NODE_ENV=production PORT=3000 node ./private/build/server.js",
+    "prod2": "NODE_ENV=production PORT=3000 USEHTTP2=true node ./private/build/server.js",
+    "prestart": "babel-node --presets es2015 ./build.js",
+    "start": "node ./private/build/server.js"
   },
   "author": "Johan Burmester <johanbur@kth.se",
   "license": "Apache-2.0",
@@ -40,14 +42,13 @@
     "eslint-plugin-promise": "^1.0.8",
     "eslint-plugin-react": "^5.0.0",
     "eslint-plugin-standard": "^1.3.1",
-    "express-graphql": "^0.5.4",
+    "json-loader": "^0.5.4",
     "node-sass": "^3.10.0",
-    "react": "^15.3.1",
-    "react-dom": "^15.3.1",
     "react-hot-loader": "^3.0.0-beta.4",
     "sass-loader": "^4.0.2",
     "style-loader": "^0.13.1",
-    "webpack-dev-server": "^1.15.1"
+    "webpack-dev-server": "^1.15.1",
+    "webpack-node-externals": "^1.5.4"
   },
   "dependencies": {
     "babel-cli": "^6.14.0",
@@ -66,7 +67,6 @@
     "react": "^15.3.1",
     "react-dom": "^15.3.1",
     "spdy": "^3.3.5",
-    "underscore": "^1.8.3",
     "webpack": "^1.13.2",
     "whatwg-fetch": "^2.0.1"
   }

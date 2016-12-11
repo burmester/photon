@@ -1,6 +1,6 @@
 import {GraphQLObjectType, GraphQLSchema, GraphQLNonNull, GraphQLList, GraphQLString} from 'graphql';
 
-import {Pokemon} from './Pokemon';
+import {Pokemon} from './pokemon';
 import {PokemonType, UserType} from './schemaTypes';
 import {db} from './mongoService';
 

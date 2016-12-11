@@ -2,9 +2,10 @@ import webpack from 'webpack';
 import webpackConfig from './webpack.production.config.js';
 
 function webpackCompiler () {
+  let bundleStart = Date.now();
+
   return new Promise((resolve, reject) => {
     const compiler = webpack(webpackConfig);
-
     compiler.run((err, stats) => {
       if (err) {
         console.log('Webpack compiler encountered a fatal error.', err);
@@ -12,7 +13,7 @@ function webpackCompiler () {
       }
 
       const jsonStats = stats.toJson();
-      console.log('Webpack compile completed.');
+      console.log('Webpack compile completed.', 'Bundled in ' + (Date.now() - bundleStart) + 'ms!');
 
       if (jsonStats.errors.length > 0) {
         console.log('Webpack compiler encountered errors.');

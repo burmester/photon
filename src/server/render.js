@@ -14,7 +14,7 @@ export default function (schema) {
   <html>
     <head>
       <script async src="./build/bundle.js"></script>
-      <link rel="stylesheet" href="./sass/styles.css">
+      <link rel="stylesheet" href="./public/css/styles.css">
     </head>
     <body>
       <div id="app">${body}</div>

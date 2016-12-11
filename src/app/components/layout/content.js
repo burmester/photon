@@ -1,9 +1,6 @@
 import React from 'react';
 
 export default class Content extends React.Component {
-  constructor (props) {
-    super(props);
-  }
   render () {
     let html = this.props.users.map(user => (<div key={user.name}>{user.name}</div>));
     return (
@@ -52,7 +49,7 @@ export default class Content extends React.Component {
           </p>
         </article>
       </main>
-    )
+    );
   }
 }
 
