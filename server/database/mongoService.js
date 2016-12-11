@@ -1,7 +1,7 @@
 import {MongoClient} from 'mongodb';
 
 const isProduction = process.env.NODE_ENV === 'production';
-const MONGODB_URL = isProduction
+const MONGODB_URL = isProduction && process.env.MONGODB_URI
   ? process.env.MONGODB_URI
   : 'mongodb://localhost:27017/pokedex';
 

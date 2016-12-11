@@ -13,9 +13,8 @@ import index from './server/index';
 import bundle from './server/bundle';
 
 const isProduction = process.env.NODE_ENV === 'production';
-const port = isProduction
-  ? process.env.PORT
-  : 3000;
+const useHTTP2 = isProduction ? process.env.USEHTTP2 || false : false;
+const port = isProduction ? process.env.PORT : 3000;
 
 const publicPath = path.resolve(__dirname, 'public');
 const app = express();
@@ -52,9 +51,6 @@ if (!isProduction) {
     console.log('Development server running on port ' + port);
   });
 } else {
-  const serverKey = path.resolve(__dirname, './server.key');
-  const serverCrt = path.resolve(__dirname, './server.crt');
-
   app.use(compression());
 
   app.get('/', (req, res) => {
@@ -67,13 +63,21 @@ if (!isProduction) {
 
   app.use(express.static(publicPath));
 
-  spdy.createServer({
-    key: fs.readFileSync(serverKey),
-    cert: fs.readFileSync(serverCrt)
-  }, app).listen(port, (err) => {
-    if (err) {
-      throw new Error(err);
-    }
-    console.log('Production server running on port ' + port);
-  });
+  if (useHTTP2) {
+    const serverKey = path.resolve(__dirname, './server.key');
+    const serverCrt = path.resolve(__dirname, './server.crt');
+    spdy.createServer({
+      key: fs.readFileSync(serverKey),
+      cert: fs.readFileSync(serverCrt)
+    }, app).listen(port, (err) => {
+      if (err) {
+        throw new Error(err);
+      }
+      console.log('HTTP2 production server running on port ' + port);
+    });
+  } else {
+    app.listen(port, () => {
+      console.log('Production server running on port ' + port);
+    });
+  }
 }
