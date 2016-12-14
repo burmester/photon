@@ -8,5 +8,4 @@ if (module.hot) {
   module.hot.accept();
 }
 
-ReactDOM.render(
-  <Photon data={window.default_props.data} />, document.getElementById('app'));
+ReactDOM.render(<Photon data={window.default_props.data} />, document.getElementById('app'));

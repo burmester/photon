@@ -11,18 +11,18 @@ export default function (schema) {
     graphql(schema, firstLoadQuery).then(props => {
       const body = renderToString(App(props));
       const html = `<!doctype html>
-  <html>
-    <head>
-      <script async src="/public/js/bundle.js"></script>
-      <link rel="stylesheet" href="/public/css/styles.css">
-    </head>
-    <body>
-      <div id="app">${body}</div>
-      <script>
-        var default_props = ${safeStringify(props)};
-      </script>
-    </body>
-  </html>`;
+<html>
+  <head>
+    <script async src="/public/js/bundle.js"></script>
+    <link rel="stylesheet" href="/public/css/styles.css">
+  </head>
+  <body>
+    <div id="app">${body}</div>
+    <script>
+      var default_props = ${safeStringify(props)};
+    </script>
+  </body>
+</html>`;
       resolve(html);
     });
   });
