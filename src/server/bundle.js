@@ -16,7 +16,7 @@ export default function () {
   });
 
   const bundler = new WebpackDevServer(compiler, {
-    publicPath: '/build/',
+    publicPath: '/public/js/',
     hot: true,
     quiet: false,
     noInfo: true,

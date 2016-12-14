@@ -28,13 +28,13 @@ app.get('/', (req, res) => {
 
 app.use('/graphiql', graphqlHTTP({schema: schema, rootValue: global, graphiql: true, pretty: true}));
 
-app.use('/public', express.static(publicPath));
-
 bundle();
 
-app.all('/build/*', (req, res) => {
+app.all('/public/js/bundle.js', (req, res) => {
   proxy.web(req, res, {target: 'http://localhost:8080'});
 });
+
+app.use('/public', express.static(publicPath));
 
 proxy.on('error', (e) => {
   console.log('Could not connect to proxy, please try again...');

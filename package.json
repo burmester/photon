@@ -19,10 +19,9 @@
     "install": "npm install -g webpack webpack-dev-server http-server",
     "build": "babel-node --presets es2015 ./build.js",
     "dev": "babel-node --presets es2015 ./src/server/dev.js",
-    "prod": "NODE_ENV=production PORT=3000 node ./private/build/server.js",
-    "prod2": "NODE_ENV=production PORT=3000 USEHTTP2=true node ./private/build/server.js",
+    "prod2": "NODE_ENV=production PORT=3000 USEHTTP2=true node ./server.js",
     "prestart": "babel-node --presets es2015 ./build.js",
-    "start": "node ./private/build/server.js"
+    "start": "node ./server.js"
   },
   "author": "Johan Burmester <johanbur@kth.se",
   "license": "Apache-2.0",

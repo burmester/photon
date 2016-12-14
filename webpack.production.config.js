@@ -10,10 +10,9 @@ const serverPath = path.resolve(__dirname, 'src', 'server');
 
 export default {
   target: 'node',
-  devtool: 'source-map',
   entry: {
-    'public/build/bundle.js': app,
-    'private/build/server.js': server
+    'public/js/bundle.js': app,
+    'server.js': server
   },
   output: {
     path: './',

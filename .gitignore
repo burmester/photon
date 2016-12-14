@@ -7,3 +7,5 @@ npm-debug.log
 server.crt
 server.csr
 server.key
+server.js
+public/js/bundle.js

@@ -1,7 +1,7 @@
 import webpack from 'webpack';
 import path from 'path';
 
-const buildPath = path.resolve(__dirname, 'public', 'build');
+const buildPath = path.resolve(__dirname, 'public', 'js');
 const mainPath = path.resolve(__dirname, 'src', 'app', 'App.js');
 const appPath = path.resolve(__dirname, 'src', 'app');
 
