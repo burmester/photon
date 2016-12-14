@@ -5,7 +5,6 @@ import fs from 'fs';
 import spdy from 'spdy';
 import compression from 'compression';
 import moment from 'moment';
-import bodyParser from 'body-parser';
 
 import graphqlHTTP from 'express-graphql';
 import schema from './server/database/schema';

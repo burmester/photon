@@ -17,7 +17,9 @@
   "repository": "git@github.com:burmester/photon.git",
   "scripts": {
     "postinstall": "npm install -g webpack webpack-dev-server http-server",
-    "start": "babel-node --presets es2015 server.js"
+    "dev": "babel-node --presets es2015 server.js",
+    "prestart": "NODE_ENV=production webpack -p --config webpack.production.config.js",
+    "start": "NODE_ENV=production PORT=3000 babel-node --presets es2015 server.js"
   },
   "author": "Johan Burmester <johanbur@kth.se",
   "license": "Apache-2.0",
@@ -37,8 +39,8 @@
     "react-hot-loader": "^3.0.0-beta.4",
     "sass-loader": "^4.0.2",
     "style-loader": "^0.13.1",
-    "webpack": "^1.13.2",
-    "webpack-dev-server": "^1.15.1"
+    "webpack": "^2.1.0-beta.25",
+    "webpack-dev-server": "^1.16.2"
   },
   "dependencies": {
     "babel-cli": "^6.14.0",
